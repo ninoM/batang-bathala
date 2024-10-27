@@ -3,6 +3,8 @@ import localFont from "next/font/local";
 import React from "react";
 import "./globals.css";
 import { Header } from "./header";
+import QueryClientProvider from "./query-client-provider";
+import { createClient } from "@/lib/supabase/server";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -21,18 +23,23 @@ export const metadata: Metadata = {
     "Empowering the holistic well-being of the youth through Mindfulness and Yoga",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const supabase = await createClient()
+  const user = await supabase.auth.getUser()
+
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Header />
-        {children}
+        <QueryClientProvider>
+          <Header user={user.data.user} />
+          {children}
+        </QueryClientProvider>
       </body>
     </html>
   );

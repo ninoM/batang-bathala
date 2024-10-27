@@ -1,11 +1,24 @@
 "use client";
 
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { User } from "@supabase/supabase-js";
+import { LogOut } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
+import { signout } from "./signout";
 
-export const Header = () => {
+export const Header = ({ user }: { user?: User | null }) => {
   const pathname = usePathname();
   const [scrollPosition, setScrollPosition] = React.useState(0);
 
@@ -44,7 +57,7 @@ export const Header = () => {
           <span className="text-2xl font-bold text-white">Batang Bathala</span>
         </div>
         <nav>
-          <ul className="flex space-x-4">
+          <ul className="flex space-x-4 items-center">
             <li>
               <Link
                 href="/"
@@ -68,9 +81,56 @@ export const Header = () => {
                 Contact
               </a>
             </li>
+            {user && (
+              <li>
+                <AvatarMenu
+                  onLogout={async () => {
+                    await signout();
+                  }}
+                />
+              </li>
+            )}
           </ul>
         </nav>
       </div>
     </header>
+  );
+};
+
+const AvatarMenu = ({
+  userName = "User",
+  onLogout = () => console.log("Logout clicked"),
+}: {
+  userImage?: string;
+  userName?: string;
+  onLogout?: () => void;
+}) => {
+  const [isOpen, setIsOpen] = React.useState(false);
+
+  return (
+    <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+          <Avatar className="h-8 w-8">
+            <AvatarFallback>{userName.charAt(0)}</AvatarFallback>
+          </Avatar>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="w-56" align="end" forceMount>
+        <DropdownMenuLabel className="font-normal">
+          <div className="flex flex-col space-y-1">
+            <p className="text-sm font-medium leading-none">{userName}</p>
+            <p className="text-xs leading-none text-muted-foreground">
+              {userName.toLowerCase()}@example.com
+            </p>
+          </div>
+        </DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onClick={onLogout}>
+          <LogOut className="mr-2 h-4 w-4" />
+          <span>Log out</span>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
