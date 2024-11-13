@@ -32,11 +32,11 @@ export const events = pgTable("events", {
   slug: text("slug")
     .notNull()
     .generatedAlwaysAs(
-      "lower(regexp_replace(regexp_replace(name, '[^a-zA-Z0-9s]', '', 'g'), 's+', '-', 'g'))"
+      "lower(trim(regexp_replace(regexp_replace(name, '[^a-zA-Z0-9\\s]', '', 'g'), '\\s+', '-', 'g')))"
     )
     .unique(),
   date: timestamp({ withTimezone: true }).defaultNow(),
-  location: varchar({ length: 255 }).notNull(),
+  location: varchar({ length: 255 }),
   description: text(),
 
   createdAt: timestamp({ withTimezone: true }).defaultNow().notNull(),
