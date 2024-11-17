@@ -1,10 +1,12 @@
+import { createClient } from "@/lib/supabase/server";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import React from "react";
 import "./globals.css";
 import { Header } from "./header";
 import QueryClientProvider from "./query-client-provider";
-import { createClient } from "@/lib/supabase/server";
+
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -28,18 +30,20 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const supabase = await createClient()
-  const user = await supabase.auth.getUser()
+  const supabase = await createClient();
+  const user = await supabase.auth.getUser();
 
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <QueryClientProvider>
-          <Header user={user.data.user} />
-          {children}
-        </QueryClientProvider>
+        <NuqsAdapter>
+          <QueryClientProvider>
+            <Header user={user.data.user} />
+            {children}
+          </QueryClientProvider>
+        </NuqsAdapter>
       </body>
     </html>
   );

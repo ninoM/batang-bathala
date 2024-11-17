@@ -11,7 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { User } from "@supabase/supabase-js";
-import { LogOut } from "lucide-react";
+import { LayoutDashboard, LogOut } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -125,6 +125,13 @@ const AvatarMenu = ({
             </p>
           </div>
         </DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <Link prefetch href="/dashboard">
+          <DropdownMenuItem>
+            <LayoutDashboard className="mr-2 h-4 w-4" />
+            <span>Dashboard</span>
+          </DropdownMenuItem>
+        </Link>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={onLogout}>
           <LogOut className="mr-2 h-4 w-4" />

@@ -1,5 +1,4 @@
-import { db } from "@/db";
-import Link from "next/link";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -10,15 +9,18 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { PlusCircle } from "lucide-react";
+import { db } from "@/db";
+import { formatPotentialDate } from "@/lib/utils";
+import { Edit, Eye, PlusCircle, Trash2 } from "lucide-react";
+import Link from "next/link";
+import DeleteEventIconButton from "./delete-event-icon-button";
 
 export default async function Page() {
   const events = await db.query.events.findMany();
-  console.log(events);
   return (
     <div className="container mx-auto py-10">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold text-primary">Upcoming Events</h1>
+        <h1 className="text-2xl font-bold text-primary">Events</h1>
         <Link href="/dashboard/create-event" passHref>
           <Button className="bg-primary text-primary-foreground hover:bg-primary/90">
             <PlusCircle className="mr-2 h-4 w-4" />
@@ -26,17 +28,18 @@ export default async function Page() {
           </Button>
         </Link>
       </div>
-
       {/* Table view for larger screens */}
       <div className="hidden lg:block overflow-x-auto">
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-1/4">Name</TableHead>
+              <TableHead className="w-1/5">Name</TableHead>
               <TableHead>Date</TableHead>
               <TableHead>Location</TableHead>
-              <TableHead className="w-1/3">Blurb</TableHead>
+              <TableHead className="w-1/4">Blurb</TableHead>
               <TableHead>Created Date</TableHead>
+              <TableHead>Published</TableHead>
+              <TableHead className="text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -47,17 +50,35 @@ export default async function Page() {
                     {event.name}
                   </div>
                 </TableCell>
-                <TableCell>
-                  {event?.date && new Date(event.date).toLocaleString()}
-                </TableCell>
+                <TableCell>{formatPotentialDate(event.date)}</TableCell>
                 <TableCell>{event.location}</TableCell>
                 <TableCell>
                   <div className="truncate max-w-md" title={event.blurb}>
                     {event.blurb}
                   </div>
                 </TableCell>
+                <TableCell>{formatPotentialDate(event.createdAt)}</TableCell>
                 <TableCell>
-                  {new Date(event.createdAt).toLocaleDateString()}
+                  <Badge variant={event.published ? "default" : "secondary"}>
+                    {event.published ? "Published" : "Draft"}
+                  </Badge>
+                </TableCell>
+                <TableCell className="text-right">
+                  <div className="flex justify-end gap-2">
+                    <Link href={`/event/${event.slug}`}>
+                      <Button variant="outline" size="sm">
+                        <Eye className="h-4 w-4" />
+                        <span className="sr-only">View</span>
+                      </Button>
+                    </Link>
+                    <Link href={`/dashboard/create-event?id=${event.id}`}>
+                      <Button variant="outline" size="sm">
+                        <Edit className="h-4 w-4" />
+                        <span className="sr-only">Edit</span>
+                      </Button>
+                    </Link>
+                    <DeleteEventIconButton id={event.id} />
+                  </div>
                 </TableCell>
               </TableRow>
             ))}
@@ -75,9 +96,14 @@ export default async function Page() {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-2">
-              <p>
-                <strong>Date:</strong> {event?.date && new Date(event.date).toLocaleString()}
-              </p>
+              <div className="flex justify-between items-center">
+                <p>
+                  <strong>Date:</strong> {formatPotentialDate(event.date)}
+                </p>
+                <Badge variant={event.published ? "default" : "secondary"}>
+                  {event.published ? "Published" : "Draft"}
+                </Badge>
+              </div>
               <p>
                 <strong>Location:</strong> {event.location}
               </p>
@@ -88,9 +114,26 @@ export default async function Page() {
                 </p>
               </div>
               <p>
-                <strong>Created:</strong>{" "}
-                {new Date(event.createdAt).toLocaleDateString()}
+                <strong>Created:</strong> {formatPotentialDate(event.createdAt)}
               </p>
+              <div className="flex justify-end gap-2 mt-4">
+                <Link href={`/event/${event.slug}`}>
+                  <Button variant="outline" size="sm">
+                    <Eye className="h-4 w-4 mr-2" />
+                    View
+                  </Button>
+                </Link>
+                <Link href={`/dashboard/create-event?id=${event.id}`}>
+                  <Button variant="outline" size="sm">
+                    <Edit className="h-4 w-4 mr-2" />
+                    Edit
+                  </Button>
+                </Link>
+                <Button variant="outline" size="sm">
+                  <Trash2 className="h-4 w-4 mr-2" />
+                  Delete
+                </Button>
+              </div>
             </CardContent>
           </Card>
         ))}

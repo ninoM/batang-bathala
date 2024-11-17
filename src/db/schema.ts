@@ -1,4 +1,5 @@
 import {
+  boolean,
   integer,
   pgTable,
   text,
@@ -38,6 +39,7 @@ export const events = pgTable("events", {
   date: timestamp({ withTimezone: true }).defaultNow(),
   location: varchar({ length: 255 }),
   description: text(),
+  published: boolean().default(false),
 
   createdAt: timestamp({ withTimezone: true }).defaultNow().notNull(),
 });
