@@ -6,13 +6,25 @@ import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { createInsertSchema } from "drizzle-zod";
 import { redirect } from "next/navigation";
-import z from "zod"
+import z from "zod";
 
-const insertEventSchema = createInsertSchema(events).omit({ createdAt: true, slug: true });
+const insertEventSchema = createInsertSchema(events).omit({
+  createdAt: true,
+  slug: true,
+});
 export const createOrUpdateEvent = async (
   event: z.infer<typeof insertEventSchema>
 ) => {
-  const {id, ...parsedEvent} = insertEventSchema.parse(event);
+  const { id, ...parsedEvent } = insertEventSchema
+    .transform(({ date, ...rest }) => {
+      if (date) {
+        const dateOnly = new Date(date);
+        dateOnly.setHours(0, 0, 0, 0);
+        return { ...rest, date: dateOnly };
+      }
+      return rest;
+    })
+    .parse(event);
 
   if (id) {
     await db.update(events).set(parsedEvent).where(eq(events.id, id));
