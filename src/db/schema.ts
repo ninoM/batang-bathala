@@ -40,6 +40,8 @@ export const events = pgTable("events", {
   location: varchar({ length: 255 }),
   description: text(),
   published: boolean().default(false),
+  bannerImageUrl: text(),
+  jotformUrl: text(),
 
   createdAt: timestamp({ withTimezone: true }).defaultNow().notNull(),
 });
