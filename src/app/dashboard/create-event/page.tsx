@@ -1,10 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { db } from "@/db";
+import { events } from "@/db/schema";
 import { eq } from "drizzle-orm";
+import { ArrowLeftIcon } from "lucide-react";
 import Link from "next/link";
 import { parseAsInteger } from "nuqs/server";
 import CreateEventForm from "./create-event-form";
-import { events } from "@/db/schema";
 
 export default async function CreateEventPage(props: {
   searchParams: Promise<{ id?: string }>;
@@ -21,9 +22,12 @@ export default async function CreateEventPage(props: {
 
   return (
     <div className="container mx-auto py-10">
-      <div className="w-full max-w-5xl mx-auto">
+      <div className="w-full max-w-7xl mx-auto">
         <Link href="/dashboard">
-          <Button variant="outline">Back</Button>
+          <Button className="mb-2" variant="ghost">
+            <ArrowLeftIcon />
+            <span>Back</span>
+          </Button>
         </Link>
       </div>
       <CreateEventForm initialValues={event} />

@@ -78,7 +78,7 @@ export default function CreateEventForm({
   };
 
   return (
-    <Card className="w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <Card className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <CardHeader className="space-y-1">
         <CardTitle className="text-3xl font-bold text-primary">
           {initialValues ? "Edit Event" : "Create Event"}
@@ -86,8 +86,8 @@ export default function CreateEventForm({
       </CardHeader>
       <form onSubmit={handleSubmit}>
         <CardContent className="space-y-8">
-          <div className="grid gap-6 md:grid-cols-3">
-            <div className="space-y-2 md:col-span-3">
+          <div className="grid gap-6 md:grid-cols-2">
+            <div className="space-y-2 md:col-span-2">
               <Label htmlFor="title" className="text-lg font-medium">
                 Event Title
               </Label>
