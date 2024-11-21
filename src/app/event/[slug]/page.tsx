@@ -69,13 +69,11 @@ export default async function EventPage({
         </div>
 
         <div className="mb-8">
-          {/* <Image
-            src={imageUrl}
-            alt={title}
-            width={800}
-            height={400}
-            className="rounded-lg object-cover w-full"
-          /> */}
+          {event.bannerImageUrl && (
+            <div className="overflow-hidden rounded-lg object-cover w-full">
+              <img src={event.bannerImageUrl} alt={event.name} />
+            </div>
+          )}
         </div>
 
         <div className="prose prose-sm max-w-none mb-8">
@@ -86,10 +84,24 @@ export default async function EventPage({
 
         <div className="bg-card text-card-foreground p-6 rounded-lg">
           <h2 className="text-2xl font-semibold mb-4">
-            Register for this event
+            {`Register for this event ${!event.jotformUrl && "soon"}`}
           </h2>
-          <p className="mb-4">Spaces are limited. Reserve your spot now!</p>
-          <Button size="lg">Register Now</Button>
+          {event.jotformUrl ? (
+            <>
+              <p className="mb-4">Spaces are limited. Reserve your spot now!</p>
+              <Link
+                href={event.jotformUrl}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <Button size="lg">Register Now</Button>
+              </Link>
+            </>
+          ) : (
+            <Button disabled size="lg">
+              Register soon!
+            </Button>
+          )}
         </div>
       </article>
     </main>

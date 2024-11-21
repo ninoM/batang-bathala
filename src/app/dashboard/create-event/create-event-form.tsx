@@ -43,6 +43,8 @@ export default function CreateEventForm({
   const [location, setLocation] = React.useState("");
   const [description, setDescription] = React.useState("");
   const [published, setPublished] = React.useState(false);
+  const [bannerImageUrl, setBannerImageUrl] = React.useState("");
+  const [jotformUrl, setJotformUrl] = React.useState("");
 
   React.useEffect(() => {
     if (initialValues) {
@@ -52,6 +54,8 @@ export default function CreateEventForm({
       setDescription(initialValues.description || "");
       setDate(initialValues.date ? new Date(initialValues.date) : undefined);
       setPublished(initialValues.published || false);
+      setBannerImageUrl(initialValues.bannerImageUrl || "");
+      setJotformUrl(initialValues.jotformUrl || "");
     }
   }, [initialValues]);
 
@@ -65,6 +69,8 @@ export default function CreateEventForm({
       location,
       description,
       published,
+      bannerImageUrl,
+      jotformUrl,
     });
     await createOrUpdateEvent({
       ...(initialValues ?? {}),
@@ -74,6 +80,8 @@ export default function CreateEventForm({
       location,
       description,
       published,
+      bannerImageUrl,
+      jotformUrl,
     });
   };
 
@@ -139,6 +147,32 @@ export default function CreateEventForm({
                   />
                 </PopoverContent>
               </Popover>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="bannerImageUrl" className="text-lg font-medium">
+                Banner Image URL
+              </Label>
+              <Input
+                id="bannerImageUrl"
+                placeholder="Enter banner image URL"
+                className="text-lg"
+                value={bannerImageUrl}
+                onChange={(e) => setBannerImageUrl(e.target.value)}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="jotformUrl" className="text-lg font-medium">
+                Jotform URL
+              </Label>
+              <Input
+                id="jotformUrl"
+                placeholder="Jotform URL for event registration"
+                className="text-lg"
+                value={jotformUrl}
+                onChange={(e) => setJotformUrl(e.target.value)}
+              />
             </div>
           </div>
 
