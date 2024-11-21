@@ -46,16 +46,20 @@ export const Header = ({ user }: { user?: User | null }) => {
       }`}
     >
       <div className="container mx-auto flex flex-row justify-between items-center px-4">
-        <div className="flex items-center space-x-2 mb-4 sm:mb-0">
-          <Image
-            src="/logo.webp"
-            width={40}
-            height={40}
-            alt="batang bathala logo"
-            className="w-10 aspect-square rounded-full border-2 border-purple-700"
-          />
-          <span className="text-2xl font-bold text-white">Batang Bathala</span>
-        </div>
+        <Link href="/">
+          <div className="flex items-center space-x-2 mb-4 sm:mb-0">
+            <Image
+              src="/logo.webp"
+              width={40}
+              height={40}
+              alt="batang bathala logo"
+              className="w-10 aspect-square rounded-full border-2 border-purple-700"
+            />
+            <span className="text-2xl font-bold text-white">
+              Batang Bathala
+            </span>
+          </div>
+        </Link>
         <nav>
           <ul className="flex space-x-4 items-center">
             <li>
@@ -67,17 +71,20 @@ export const Header = ({ user }: { user?: User | null }) => {
               </Link>
             </li>
             <li>
-              <a href="#" className="hover:text-yellow-300 transition-colors">
+              <a href="/about-us" className="hover:text-yellow-300 transition-colors">
                 About
               </a>
             </li>
-            <li>
-              <a href="#" className="hover:text-yellow-300 transition-colors">
-                Classes
+            {/* <li>
+              <a
+                href="/events"
+                className="hover:text-yellow-300 transition-colors"
+              >
+                Events
               </a>
-            </li>
+            </li> */}
             <li>
-              <a href="#" className="hover:text-yellow-300 transition-colors">
+              <a href="/contact-us" className="hover:text-yellow-300 transition-colors">
                 Contact
               </a>
             </li>
