@@ -1,7 +1,7 @@
 import { CtaButton } from "@/components/ui/cta-button";
-import { ArrowRight } from "lucide-react";
-import Image from "next/image";
+import { ArrowRight, Facebook, Instagram } from "lucide-react";
 import Link from "next/link";
+import RecentEventsSection from "./recent-events-section";
 
 export default function Home() {
   return (
@@ -24,20 +24,22 @@ export default function Home() {
                 Join us in nurturing your child&apos;s mind, body, and spirit
                 through our specially crafted classes.
               </p>
-              <Link href="/schedule-appointment">
+              <Link href="#">
                 <CtaButton>
                   Schedule an Appointment
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </CtaButton>
               </Link>
             </div>
-            <div className="lg:w-1/2">
-              <Image
-                src="https://placehold.co/400x400"
-                alt="Children practicing yoga"
-                className="mx-auto w-full max-w-md rounded-lg shadow-lg"
-                width={400}
-                height={400}
+            <div className="lg:w-1/2 flex justify-center">
+              <iframe
+                className="rounded-lg outline-purple-950 outline outline-offset-2"
+                width="560"
+                height="315"
+                src="https://www.youtube.com/embed/brdV2NhtvyM?si=00IRUecjxT6kzpLc&amp;controls=0&amp;autoplay=1&amp;mute=1&amp;loop=1&amp;start=101&amp;cc_load_policy=1&amp;hl=en&amp;cc_lang_pref=en"
+                title="Batang Bathala Featured in Bilyonaryo News"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
               />
             </div>
           </div>
@@ -103,22 +105,24 @@ export default function Home() {
             Meet Your Teacher
           </h2>
           <div className="flex flex-col items-center justify-center space-y-6 md:flex-row md:space-x-12 md:space-y-0">
-            <Image
-              src="https://placehold.co/200x200"
+            <img
+              src="https://drive.google.com/thumbnail?id=1iS9Y3fkz_1wCuWEf5GBkf60axB6i1ERZ&sz=w200"
               alt="Teacher Teddy"
               className="h-48 w-48 rounded-full border-4 border-purple-600 object-cover shadow-lg"
-              width={200}
-              height={200}
             />
             <div className="space-y-4 md:w-1/2">
               <h3 className="text-2xl font-semibold text-gray-800 sm:text-3xl">
                 Teacher Teddy
               </h3>
-              <p className="text-base text-gray-600 sm:text-lg">
+              <p className="prose prose:base text-base text-gray-600 sm:text-lg">
                 Hello, I am Teacher Teddy! I am a licensed early childhood
                 educator and a certified children&apos;s mindfulness & yoga
                 teacher, trained at{" "}
-                <Link href="https://yogaforkidsbali.com">
+                <Link
+                  href="https://yogaforkidsbali.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   Yoga for Kids Bali Indonesia
                 </Link>
                 .
@@ -133,18 +137,44 @@ export default function Home() {
           </div>
         </div>
       </section>
-      {/* <RecentEventsSectionCell /> */}
+      <RecentEventsSection />
       <footer className="bg-gray-800 py-6 text-white">
         <div className="container mx-auto px-4 text-center">
+          <div className="flex justify-center space-x-4 mb-4">
+            <Link
+              href="https://www.instagram.com/batangbathala"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transition-colors hover:text-secondary"
+              aria-label="Follow us on Instagram"
+            >
+              <Instagram className="h-6 w-6" />
+            </Link>
+            <Link
+              href="https://www.facebook.com/profile.php?id=61564865915067"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transition-colors hover:text-secondary"
+              aria-label="Follow us on Facebook"
+            >
+              <Facebook className="h-6 w-6" />
+            </Link>
+          </div>
           <p>&copy; 2024 Batang Bathala. All rights reserved.</p>
           <p className="mt-2">
-            <a href="#" className="transition-colors hover:text-yellow-300">
+            <Link
+              href="/privacy-policy"
+              className="transition-colors hover:text-yellow-300"
+            >
               Privacy Policy
-            </a>{" "}
+            </Link>{" "}
             |{" "}
-            <a href="#" className="transition-colors hover:text-yellow-300">
+            <Link
+              href="/terms-of-service"
+              className="transition-colors hover:text-yellow-300"
+            >
               Terms of Service
-            </a>
+            </Link>
           </p>
         </div>
       </footer>
