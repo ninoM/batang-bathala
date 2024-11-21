@@ -31,16 +31,18 @@ export default function Home() {
                 </CtaButton>
               </Link>
             </div>
-            <div className="lg:w-1/2 flex justify-center">
-              <iframe
-                className="rounded-lg outline-purple-950 outline outline-offset-2"
-                width="560"
-                height="315"
-                src="https://www.youtube.com/embed/brdV2NhtvyM?si=00IRUecjxT6kzpLc&amp;controls=0&amp;autoplay=1&amp;mute=1&amp;loop=1&amp;start=101&amp;cc_load_policy=1&amp;hl=en&amp;cc_lang_pref=en"
-                title="Batang Bathala Featured in Bilyonaryo News"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerPolicy="strict-origin-when-cross-origin"
-              />
+            <div className="lg:w-1/2 w-full max-w-2xl mx-auto">
+              <div className="relative pb-[56.25%] h-0 overflow-hidden rounded-lg outline-purple-950 outline outline-offset-2">
+                <div className="absolute inset-0 bg-muted animate-pulse"></div>
+                <iframe
+                  className="absolute top-0 left-0 w-full h-full"
+                  src="https://www.youtube-nocookie.com/embed/brdV2NhtvyM?si=00IRUecjxT6kzpLc&amp;controls=0&amp;autoplay=1&amp;mute=1&amp;loop=1&amp;start=101&amp;cc_load_policy=1&amp;hl=en&amp;cc_lang_pref=en&amp;rel=0&amp;modestbranding=1&amp;playsinline=1"
+                  title="Batang Bathala Featured in Bilyonaryo News"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  loading="lazy"
+                />
+              </div>
             </div>
           </div>
         </div>
